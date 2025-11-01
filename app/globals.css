@@ -24,3 +24,29 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Dark tech background used on the landing page */
+.bg-tech {
+  /* deep blue gradient backdrop */
+  background:
+    radial-gradient(1200px 600px at 80% 110%, rgba(0, 132, 255, 0.12), transparent 60%),
+    radial-gradient(900px 500px at -10% -10%, rgba(0, 255, 200, 0.08), transparent 60%),
+    linear-gradient(180deg, #0b1422 0%, #0b1220 50%, #0a1020 100%);
+}
+
+/* subtle grid/dots overlay */
+.bg-tech:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px
+    );
+  background-size: 24px 24px, 100% 120px;
+  background-position: 0 0, 0 0;
+  mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+}
