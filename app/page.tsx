@@ -8,6 +8,7 @@ export default function Home() {
   const [isMissionModalOpen, setIsMissionModalOpen] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
   const [language, setLanguage] = useState<'vi' | 'en'>('vi');
   
   // Translations
@@ -42,6 +43,8 @@ export default function Home() {
       coreValues: "GIÁ TRỊ CỐT LÕI (CORE VALUES)",
       missionTitle: "SỨ MỆNH: HOME.AI",
       missionSubtitle: "ĐƠN GIẢN HÓA CÔNG NGHỆ, TỐI ƯU CUỘC SỐNG GIA ĐÌNH VÀ KINH DOANH",
+      cvModalTitle: "CV ONLINE",
+      template: "Mẫu",
       // Core Values cards
       simplifyTitle: "1. ĐƠN GIẢN HÓA",
       simplifyCore: "Giá trị cốt lõi:",
@@ -99,6 +102,8 @@ export default function Home() {
       coreValues: "CORE VALUES",
       missionTitle: "MISSION: HOME.AI",
       missionSubtitle: "SIMPLIFYING TECHNOLOGY, OPTIMIZING HOME LIFE AND BUSINESS",
+      cvModalTitle: "CV ONLINE",
+      template: "Template",
       // Core Values cards
       simplifyTitle: "1. SIMPLIFICATION",
       simplifyCore: "Core Value:",
@@ -304,17 +309,18 @@ export default function Home() {
         {/* Pills Row */}
         <div className="mx-auto mt-4 md:mt-7 grid max-w-4xl grid-cols-2 sm:grid-cols-4 gap-2 md:gap-3">
           {[
-            { id: "genealogy", label: t.genealogy, className: "bg-[#2D6DF6] hover:bg-[#2a61d7]" },
-            { id: "familyCalendar", label: t.familyCalendar, className: "bg-[#FF8A34] hover:bg-[#e7792c]" },
-            { id: "onlineSales", label: t.onlineSales, className: "bg-[#1CC7A5] hover:bg-[#17b295]" },
-            { id: "cvOnline", label: t.cvOnline, className: "bg-[#7A5AF8] hover:bg-[#684ae6]" },
-            { id: "fundOnline", label: t.fundOnline, className: "bg-[#17A2FF] hover:bg-[#1592e6]" },
-            { id: "cafeOnline", label: t.cafeOnline, className: "bg-[#6B7280] hover:bg-[#5a606c]" },
-            { id: "qltnOnline", label: t.qltnOnline, className: "bg-[#12B5A6] hover:bg-[#0fa394]" },
-            { id: "qlxeOnline", label: t.qlxeOnline, className: "bg-[#5B6CFF] hover:bg-[#4f5fe6]" },
+            { id: "genealogy", label: t.genealogy, className: "bg-[#2D6DF6] hover:bg-[#2a61d7]", onClick: undefined },
+            { id: "familyCalendar", label: t.familyCalendar, className: "bg-[#FF8A34] hover:bg-[#e7792c]", onClick: undefined },
+            { id: "onlineSales", label: t.onlineSales, className: "bg-[#1CC7A5] hover:bg-[#17b295]", onClick: undefined },
+            { id: "cvOnline", label: t.cvOnline, className: "bg-[#7A5AF8] hover:bg-[#684ae6]", onClick: () => setIsCVModalOpen(true) },
+            { id: "fundOnline", label: t.fundOnline, className: "bg-[#17A2FF] hover:bg-[#1592e6]", onClick: undefined },
+            { id: "cafeOnline", label: t.cafeOnline, className: "bg-[#6B7280] hover:bg-[#5a606c]", onClick: undefined },
+            { id: "qltnOnline", label: t.qltnOnline, className: "bg-[#12B5A6] hover:bg-[#0fa394]", onClick: undefined },
+            { id: "qlxeOnline", label: t.qlxeOnline, className: "bg-[#5B6CFF] hover:bg-[#4f5fe6]", onClick: undefined },
           ].map((b) => (
             <button
               key={b.id}
+              onClick={b.onClick}
               className={
                 "w-full rounded-md px-2 py-2 md:px-4 md:py-2.5 text-[11px] sm:text-[12px] md:text-[13px] font-semibold text-white shadow-sm transition-colors text-center " + b.className
               }
@@ -643,6 +649,70 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* CV Online Modal */}
+      {isCVModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+          onClick={() => setIsCVModalOpen(false)}
+        >
+          <div 
+            className="relative w-full max-w-md mx-4 rounded-xl md:rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-50 p-6 md:p-8 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setIsCVModalOpen(false)}
+              className="absolute top-2 right-2 md:top-4 md:right-4 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer z-10"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="md:w-6 md:h-6">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+
+            {/* Title */}
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 text-center">
+              {t.cvModalTitle}
+            </h2>
+
+            {/* Options Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {[1, 2, 3, 4].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => {
+                    setIsCVModalOpen(false);
+                    // Open templates in new tab
+                    if (num === 1) {
+                      window.open('/cv/template/1', '_blank');
+                    } else if (num === 2) {
+                      window.open('/cv/template/2', '_blank');
+                    } else if (num === 3) {
+                      window.open('/cv/template/3', '_blank');
+                    } else if (num === 4) {
+                      window.open('/cv/template/4', '_blank');
+                    } else {
+                      // Placeholder for other templates
+                      console.log(`${t.template} ${num} selected (not yet implemented)`);
+                    }
+                  }}
+                  className="rounded-lg md:rounded-xl bg-white p-4 md:p-6 shadow-md hover:shadow-lg transition-all hover:scale-105 border border-purple-200 hover:border-purple-400"
+                >
+                  <div className="text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-2">
+                      {num}
+                    </div>
+                    <div className="text-sm md:text-base font-semibold text-gray-700">
+                      {t.template} {num}
+                    </div>
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
         </div>
