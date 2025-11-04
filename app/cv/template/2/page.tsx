@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import html2pdf from 'html2pdf.js';
 
 export default function CVTemplate2() {
   const [language, setLanguage] = useState<'vi' | 'en'>('vi');
@@ -121,9 +120,10 @@ export default function CVTemplate2() {
     }
   };
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     if (!pdfRef.current || !cvData) return;
 
+    const html2pdf = (await import('html2pdf.js')).default;
     const fullName = cvData.fullName || 'cv';
     const element = pdfRef.current;
     const opt = {

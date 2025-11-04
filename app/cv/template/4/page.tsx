@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import html2pdf from 'html2pdf.js';
 
 export default function CVTemplate4() {
   const [language, setLanguage] = useState<'vi' | 'en'>('vi');
@@ -93,9 +92,10 @@ export default function CVTemplate4() {
     setShowPreview(true);
   };
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     if (!pdfRef.current) return;
 
+    const html2pdf = (await import('html2pdf.js')).default;
     const element = pdfRef.current;
     const opt = {
       margin: 0,
